@@ -106,7 +106,7 @@ const run = async (): Promise<number> => {
 
   const {
     projectId,
-    bigQueryProjectId,
+    bigqueryProjectId,
     sourceCollectionPath,
     datasetId,
     tableId,
@@ -132,9 +132,6 @@ const run = async (): Promise<number> => {
       databaseURL: `https://${projectId}.firebaseio.com`,
     });
   }
-  // Set project ID, so it can be used in BigQuery initialization
-  process.env.PROJECT_ID = bigQueryProjectId;
-  process.env.GOOGLE_CLOUD_PROJECT = bigQueryProjectId;
 
   const rawChangeLogName = `${tableId}_raw_changelog`;
 
@@ -144,6 +141,7 @@ const run = async (): Promise<number> => {
   const dataSink = new FirestoreBigQueryEventHistoryTracker({
     tableId: tableId,
     datasetId: datasetId,
+    bqProjectId: bigqueryProjectId,
     datasetLocation,
     wildcardIds: queryCollectionGroup,
     useNewSnapshotQuerySyntax,
